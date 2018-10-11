@@ -6,7 +6,6 @@
 剑指Offer66题　记录解题思路和方法，代码以C++,Python/Java为主
 
 
-
 | 题目                           | 题解链接                                                     | 备注                          |
 | ------------------------------ | ------------------------------------------------------------ | ----------------------------- |
 | 二维数组中的查找               | [题解](http://47.106.207.151/exercises/jianzhioffer/136.html) | 顺序遍历                      |
@@ -28,8 +27,8 @@
 | 数值的整数次方                 | [题解](http://47.106.207.151/exercises/jianzhioffer/120.html) | 快速幂运算                    |
 | 矩形覆盖                       | [题解](http://47.106.207.151/exercises/jianzhioffer/121.html) | 公式推导                      |
 | 二进制中1的个数                | [题解](http://47.106.207.151/exercises/jianzhioffer/122.html) | 位运算                        |
-| 连续子数组的最大和             | [题解](https://blog.csdn.net/feng_zhiyu/article/details/82087565) | 动态规划                      |
-| 最小的K个数                    | [题解](https://blog.csdn.net/feng_zhiyu/article/details/82086505) | 堆排序（优先队列）            |
+| 连续子数组的最大和             | [题解](http://47.106.207.151/exercises/jianzhioffer/112.html) | 动态规划                      |
+| 最小的K个数                    | [题解](http://47.106.207.151/exercises/jianzhioffer/113.html) | 堆排序（优先队列）            |
 | 数组中出现次数超过一半的数字   | [题解](http://47.106.207.151/exercises/jianzhioffer/114.html) | map                           |
 | 树的子结构                     | [题解](http://47.106.207.151/exercises/jianzhioffer/115.html) | 二叉树遍历                    |
 | 合并两个排序的链表             | [题解](http://47.106.207.151/exercises/jianzhioffer/116.html) | 递归/非递归，链表             |
@@ -50,6 +49,8 @@
 |                                |                                                              |                               |
 |                                |                                                              |                               |
 
-更多相关题目，请见[专栏：剑指Offer](https://blog.csdn.net/column/details/24185.html)。
+以上为剑指Offer题解记录，以便查看。
+
+更多相关题目，请见[专栏：剑指Offer](https://blog.csdn.net/column/details/24185.html)。欢迎来访交流。以上为剑指Offer题解记录，以便查看。
 
 更新中~
