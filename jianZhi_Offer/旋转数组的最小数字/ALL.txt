@@ -1,0 +1,70 @@
+[题目链接](https://www.nowcoder.com/practice/9f3231a991af4f55b95579b44b7a01ba?tpId=13&tqId=11159&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
+思路：最简单粗暴的方法，遍历O(n)；虽然这里的数组不是完全排序的，但是大致还是有序（两个连续的非递减序列拼接）的，可以使用二分O(logn)。但是这道题**数据不给力**，导致二分耗时>=遍历耗时。
+
+代码【二分】：
+
+| 37 ms | 484K |
+| ----- | ---- |
+|       |      |
+
+```cpp
+class Solution {
+public:
+    int minNumberInRotateArray(vector<int> rotateArray) {
+        int len=rotateArray.size();
+        if(len==0) {
+            return 0;
+        }
+        int star=0,end=len-1;
+        int mid=star;
+        while(rotateArray[star]>=rotateArray[end]) {
+            if(end-star==1) {
+                mid=end;
+                break;
+            }
+            mid=(star+end)>>1;
+            if(rotateArray[mid]>rotateArray[end]) {
+                star=mid;
+            } else if(rotateArray[mid]<rotateArray[star]) {
+                end=mid;
+            }
+        }
+        return rotateArray[mid];
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【遍历】：
+
+| 37 ms | 608K |
+| ----- | ---- |
+|       |      |
+
+```cpp
+class Solution {
+public:
+    int minNumberInRotateArray(vector<int> rotateArray) {
+        if(rotateArray.size()==0) {
+            return 0;
+        }
+        int minNum = rotateArray[0];
+        for(auto x:rotateArray) {
+            if(x<minNum) {
+                minNum = x;
+            }
+        }
+        return minNum;
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+ 

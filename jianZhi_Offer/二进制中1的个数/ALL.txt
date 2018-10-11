@@ -1,0 +1,64 @@
+[题目链接](https://www.nowcoder.com/practice/8ee967e43c2c4ec193b040ea7fbb10b8?tpId=13&tqId=11164&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+
+思路：
+
+【1】二进制数1的个数，容易想到BIT中lowbit。 n&(-n)表示一个数的最右边的1代表的数
+
+【2】无符号右移运算符>>>，右移位时高位补0（无论原来的数是正是负）。java中可以直接使用，C++可以先转化unsigned int,再使用>>。ps：此处**不能直接使用>>**是因为整数可能为负，否则死循环。
+
+【3】bitset<>   count()返回1的个数。 更多方法：[C++ bitset 常用函数及运算符](https://www.cnblogs.com/RabbitHu/p/bitset.html)
+
+代码【1】：
+
+```cpp
+class Solution {
+public:
+    int  NumberOf1(int n) {
+        int res = 0 ;
+        while(n != 0){
+            res++;
+            n -= (n&(-n));
+        }
+        return res;
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【2】:
+
+```cpp
+class Solution {
+public:
+    int  NumberOf1(int n) {
+        int res = 0 ;
+        unsigned int x=n;
+        while(x != 0) {
+            if((x&1)==1) {
+                res++;
+            }
+            x=x>>1;
+//            n -= (n&(-n));
+        }
+        return res;
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【3】：
+
+```cpp
+class Solution {
+public:
+    int  NumberOf1(int n) {
+        return bitset<32>(n).count();
+    }
+};
+```

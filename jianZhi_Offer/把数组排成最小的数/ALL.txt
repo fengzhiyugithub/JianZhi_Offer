@@ -1,0 +1,33 @@
+[题目链接](https://www.nowcoder.com/practice/8fecd3f8ba334add803bf2a06af1b993?tpId=13&tqId=11185&tPage=2&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
+
+分析：拼接乘最小数字，不能是比较数字的大小，例如：3<32<321，但是结果是由321  32 3拼接得到。所以应该比较拼接后的大小。　在此基础上，可以考虑减小空间复杂度，如果卡内存，可能会爆。
+
+1. ```
+   class Solution {
+   public:
+       static bool cmp(const string& s1,const string& s2) {
+           string a=s1+s2;
+           string b=s2+s1;
+           return a<b;
+       }
+       string PrintMinNumber(vector<int> numbers) {
+           string res="";
+           if(numbers.size()<=0) return res;
+           vector<string>sNum;
+           for(auto x:numbers) {
+               stringstream ss;
+               ss<<x;
+               sNum.push_back(ss.str());
+           }
+           sort(sNum.begin(), sNum.end(), cmp);
+           for(auto str:sNum) {
+               res.append(str);
+           }
+           return res;
+       }
+   };
+   ```

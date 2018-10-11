@@ -1,0 +1,53 @@
+[题目链接](https://www.nowcoder.com/practice/6e196c44c7004d15b1610b9afca8bd88?tpId=13&tqId=11170&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+
+思路：
+
+![img](https://img-blog.csdn.net/20180827021433449?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ZlbmdfemhpeXU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+例如图中的两棵二叉树，由于A中有一部分子树的结构和B是一样的，因此B是A的子结构。
+
+要查找树A中是否存在和树B结构一样的子树，**可以分成两步：**
+
+1. **第一步在树A中找到和B的根节点的值一样的结点R；**
+2. **第二步再判断树A中以R为根结点的子树是不是包含和树B一样的结构。**
+
+第一步在树A中查找与根结点的值一样的结点，这实际上就是**树的遍历**。递归调用HasSubTree遍历二叉树A。如果发现某一结点的值和树B的头结点的值相同，则调用isSubtree，做第二步判断。
+
+第二步是判断树A中**以R为根结点的子树**是不是和树B具有相同的结构。
+
+以上参考:<http://www.cnblogs.com/heyonggang/archive/2013/11/03/3405482.html>
+
+代码：
+
+```cpp
+//struct TreeNode {
+//    int val;
+//    struct TreeNode *left;
+//    struct TreeNode *right;
+//    TreeNode(int x) :
+//        val(x), left(NULL), right(NULL) {
+//    }
+//};
+class Solution {
+    bool isSubtree(TreeNode* pRootA, TreeNode* pRootB) {
+        if (pRootB == NULL) return true;
+        if (pRootA == NULL) return false;
+        if (pRootB->val == pRootA->val) {
+            return isSubtree(pRootA->left, pRootB->left) && isSubtree(pRootA->right, pRootB->right);
+        } else {
+            return false;
+        }
+    }
+public:
+    bool HasSubtree(TreeNode* pRootA, TreeNode* pRootB) {
+        if (pRootA == NULL || pRootB == NULL) {
+            return false;
+        }
+        return isSubtree(pRootA, pRootB) || HasSubtree(pRootA->left, pRootB) || HasSubtree(pRootA->right, pRootB);
+    }
+};
+```
