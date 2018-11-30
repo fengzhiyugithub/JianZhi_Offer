@@ -6,6 +6,7 @@
 剑指Offer66题　记录解题思路和方法，代码以C++,Python/Java为主
 
 
+
 | 题目                           | 题解链接                                                     | 备注                          |
 | ------------------------------ | ------------------------------------------------------------ | ----------------------------- |
 | 二维数组中的查找               | [题解](http://47.106.207.151/exercises/jianzhioffer/136.html) | 顺序遍历                      |
@@ -43,8 +44,8 @@
 | 第一个只出现一次的字符         | [题解](http://47.106.207.151/exercises/jianzhioffer/185.html) | 标记和计数                    |
 | 栈的压入、弹出序列             | [题解](http://47.106.207.151/exercises/jianzhioffer/186.html) | 出栈顺序的合法性判断          |
 | 二叉树中和为某一值的路径       | [题解](http://47.106.207.151/exercises/jianzhioffer/187.html) | 二叉树的路径和与路径打印      |
-|                                |                                                              |                               |
-|                                |                                                              |                               |
+| 和为S的两个数字                | [题解](http://fzhiy.com/exercises/jianzhioffer/291.html)     | vector的find()                |
+| 和为S的连续正数序列            | [题解](http://fzhiy.com/exercises/jianzhioffer/292.html)     | 和为S的连续正数序列的个数     |
 
 以上为剑指Offer题解记录，以便查看。
 
