@@ -1,0 +1,85 @@
+[题目链接](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+## 题目描述
+
+输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+
+二叉树遍历方式：
+
+前序序列：先访问根节点，再访问左子节点，最后访问右子节点。
+
+中序序列：先访问左子节点，再访问根节点，最后访问右子节点。
+
+后序序列：先访问左子节点，再访问右子节点，最后访问根节点。
+
+层序序列：依次从二叉树上到下，每一层从左往右访问。
+
+交替层序：依次从二叉树上到下，每一层交替（从左往右或从右往左）访问。
+
+思路：知道以上的遍历方式后，就可以知道前序序列的第一个元素和后序的最后一个节点是根节点，然后在中序序列中找到根节点，画图可知，可以分为左右子树的建立，那么可以采用**递归**解决。
+
+代码：
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+/**
+Definition for binary tree
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x): val(x), left(NULL), right(NULL) {}
+};
+*/
+class Solution {
+public:
+    TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
+        int len=pre.size();
+        if(len==0) {
+            return NULL;
+        }
+        TreeNode* res=new TreeNode(pre[0]);
+        //cout<<pre[0]<<" ";
+        int k=0;
+        for(int i=0; i<len; i++) {
+            if(vin[i]==pre[0]){
+                k=i;
+                break;
+            }
+        }
+        vector<int>lpre,rpre,lvin,rvin;
+        for(int i=1; i<len; i++) {
+            if(i<=k) {
+                lpre.push_back(pre[i]);
+            } else {
+                rpre.push_back(pre[i]);
+            }
+        }
+        for(int i=0; i<len; i++) {
+            if(i==k)
+                continue;
+            if(i<k) {
+                lvin.push_back(vin[i]);
+            } else {
+                rvin.push_back(vin[i]);
+            }
+        }
+        res->left=reConstructBinaryTree(lpre,lvin);
+        res->right=reConstructBinaryTree(rpre,rvin);
+        return res;
+    }
+};
+/*
+int main() {
+    int ppre[8]= {1,2,4,7,3,5,8,6};
+    int vvin[8]= {4,7,2,1,5,3,8,6};
+    vector<int>pre(ppre,ppre+8);
+    vector<int>vin(vvin,vvin+8);
+    Solution sol;
+    sol.reConstructBinaryTree(pre,vin);
+    return 0;
+}*/
+```

@@ -1,0 +1,38 @@
+[题目链接](https://www.nowcoder.com/practice/4c776177d2c04c2494f2555c9fcc1e49?tpId=13&tqId=11173&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+## 题目描述
+
+定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+
+思路：题目要求时间复杂度为O(1),这里需要采用辅助栈st2，维护st2是从大到小的栈（从底端到顶端），min()返回顶端元素即是题目所求。
+
+ps：两个栈的长度是否一样不影响。
+
+代码：
+
+   
+
+```
+class Solution {
+public:
+    stack<int>st1,st2;///维护st2栈（顶端的值最小，有序栈）
+    void push(int value) {
+        st1.push(value);
+        if(st2.empty() || (!st2.empty()&&value<st2.top())){
+            st2.push(value);
+        }
+    }
+    void pop() {
+        if(st1.top() == st2.top()){///只有顶端的数相等st2才出栈
+            st2.pop();
+        }
+        st1.pop();
+    }
+    int top() {
+        return st1.top();
+    }
+    int min() {
+        return st2.top();
+    }
+};
+```
