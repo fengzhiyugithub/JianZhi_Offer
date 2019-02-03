@@ -1,0 +1,65 @@
+[题目链接](https://www.nowcoder.com/practice/e02fdb54d7524710a7d664d082bb7811?tpId=13&tqId=11193&tPage=2&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+一个整型数组里除了两个数字之外，其他的数字都出现了偶数次。请写程序找出这两个只出现一次的数字。
+
+分析：之前做过简单一些的　数组中只有一个数字出现奇数次，明显可以通过异或运算求得。
+
+那么有个数两只出现一次。思想也是**异或**运算。先求出所有整数的异或和，求得的结果sum表示两个数不同的二进制位。sum最多有２个二进制位为1,其他都为０。那么接下来求得第一个１所在的位置。　第三个for循环理解为**分组**，分成相同位置上为1和０两组，可以分析得到**偶数次的数一定会在同一组，出现一次的两个数一定在不同组。因此最后的异或值即为所求。**
+
+```
+class Solution {
+public:
+    void FindNumsAppearOnce(vector<int> data,int* num1,int *num2) {
+        if(data.size()<2) return ;
+        int sum=0,index=0;
+        for(int i=0; i<data.size(); i++) {
+            sum^=data[i];
+        }
+        for(index=0; index<32; index++) {
+            if((sum&(1<<index))!=0) {
+                break;
+            }
+        }
+        for(int i=0; i<data.size(); i++) {
+            if((data[i]&(1<<index))!=0) {
+                num1[0]^=data[i];
+            } else {
+                num2[0]^=data[i];
+            }
+        }
+    }
+};
+```
+
+
+
+拓展：
+
+```
+链接：https://www.nowcoder.com/questionTerminal/e02fdb54d7524710a7d664d082bb7811
+来源：牛客网
+
+　　　/**
+     * 数组a中只有一个数出现一次，其他数字都出现了3次，找出这个数字
+     * @param a
+     * @return
+     */
+    public static int find1From3(int[] a){
+        int[] bits = new int[32];
+        int len = a.length;
+        for(int i = 0; i < len; i++){
+            for(int j = 0; j < 32; j++){
+                bits[j] = bits[j] + ( (a[i]>>>j) & 1);
+            }
+        }
+        int res = 0;
+        for(int i = 0; i < 32; i++){
+            if(bits[i] % 3 !=0){
+                res = res | (1 << i);
+            }
+        }
+        return res;
+    }
+```

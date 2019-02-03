@@ -1,0 +1,74 @@
+[题目链接](https://www.nowcoder.com/practice/529d3ae5a407492994ad2a246518148a?tpId=13&tqId=11167&tPage=1&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+输入一个链表，输出该链表中倒数第k个结点。
+
+思路：
+
+【1】因为是倒数第k个，可以利用栈的LIFO的性质，先用栈保存，再输出。 时间复杂度O(n+k)，空间复杂度O(n*2）
+
+【2】设置两个指针first,second，first先走k次next，若链表长度小于k，则first=nullptr，直接返回nullptr；反之，则可以到达，则进行第二次指针移动，第二次是first和second一起移动，最后返回second即为所求。 时间复杂度O(n)，空间复杂度O(n)
+
+代码【1】：
+
+```cpp
+/*
+struct ListNode {
+	int val;
+	struct ListNode *next;
+	ListNode(int x) :
+			val(x), next(NULL) {
+	}
+};*/
+class Solution {
+public:
+    ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+        if(pListHead == nullptr || k == 0) {
+            return nullptr;
+        }
+        stack<ListNode*>sta;
+        ListNode* p = pListHead;
+        while(p != nullptr) {
+            sta.push(p);
+            p=p->next;
+        }
+        if(sta.size() >= k) {
+            while((--k)) {
+                sta.pop();
+            }
+            return sta.top();
+        } else {
+            return nullptr;
+        }
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【2】：
+
+```cpp
+class Solution {
+public:
+    ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+        if(pListHead == nullptr || k == 0) {
+            return nullptr;
+        }
+        ListNode* first = pListHead;
+        ListNode* second = pListHead;
+        while(k--){
+            if(first == nullptr){
+                return nullptr;
+            }
+            first = first -> next;
+        }
+        while(first != nullptr){
+            first = first -> next;
+            second = second -> next;
+        }
+        return second;
+    }
+};
+```

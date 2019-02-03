@@ -1,0 +1,72 @@
+[题目链接](https://www.nowcoder.com/practice/e8a1b01a2df14cb2b228b30ee6a92163?tpId=13&tqId=11181&tPage=2&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+
+思路：
+
+一、使用map计数，超过一半就输出该值。空间复杂度O(n)
+
+```c++
+class Solution {
+public:
+    int MoreThanHalfNum_Solution(vector<int> numbers) {
+        map<int, int>mp;
+        for(auto number: numbers){
+            if(++mp[number]>numbers.size()/2){
+                return number;
+            }
+        }
+        return 0;
+    }
+};
+```
+
+ 
+
+二、直接sort()，统计次数。 时间复杂度O(nlogn)
+
+三、基于Partition算法， 时间复杂度O(n)
+
+数组中有一个数字出现的次数超过了数组长度的一半。如果进行排序，那么这个数组一定位于数组中间，否则不存在。即这是统计学上的中位数。      算法参见《算法导论》章节
+
+四、根据数组特点得出结果，复杂度O(n)。
+
+这个数字出现的次数比其他数字出现的次数和还要多。考虑在遍历数组时保存两个值：result代表数组中的一个数字，times代表次数。当次数为0时，result保存下一个数字，times=1；当下一个数字与之前保存的数字相同时，times++；不同时，times–。 最后一次把次数设为1的数一定是结果。
+
+![img](http://47.106.207.151/wp-content/uploads/2018/09/1539170065971-300x46.png)
+
+```c++
+class Solution {
+public:
+    bool flag = 0;
+    bool checkMoreThanHalf(vector<int>& numbers, int num){
+        int times;
+        for(auto x: numbers){
+            if(x == num){
+                times++;
+            }
+        }
+        return (times*2) > numbers.size();
+    }
+    int MoreThanHalfNum_Solution(vector<int> numbers) {
+        int result=0,times=0;
+        for(auto num: numbers){
+            if(times == 0){
+                result = num;
+                times = 1;
+            }
+            else if(num == result){
+                times++;
+            }else {
+                times--;
+            }
+        }
+        flag = checkMoreThanHalf(numbers, result);
+        result = flag ? result : 0;
+        return result;
+    }
+};
+```
+

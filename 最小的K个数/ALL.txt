@@ -1,0 +1,62 @@
+[题目链接](https://www.nowcoder.com/practice/6a296eb82cf844ca8539b57c23e6e9bf?tpId=13&tqId=11182&tPage=2&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
+
+思路：
+
+【1】快速排序
+
+【2】堆排序（优先队列实现最小堆）
+
+ps:注意k>n的情况
+
+代码【1】：
+
+```cpp
+class Solution {
+public:
+    vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+        vector<int>res;
+        if(k > input.size()){
+            return res;
+        }
+        sort(input.begin(), input.end());
+        for(int i=0;i<k;i++){
+            res.push_back(input[i]);
+        }
+        return res;
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【2】：
+
+```cpp
+class Solution {
+public:
+    vector<int> GetLeastNumbers_Solution(vector<int> input, int k) {
+        priority_queue<int>pq;
+        vector<int>res;
+        if(k > input.size() || k <= 0) {///这里注意判断k<=0,否则后面for死循环
+            return res;
+        }
+        for(auto x: input) {
+            if(pq.size()<k) {
+                pq.push(x);
+            } else if(x<pq.top()) {
+                pq.pop();
+                pq.push(x);
+            }
+        }
+        while(!pq.empty()) {
+            res.push_back(pq.top());
+            pq.pop();
+        }
+        return res;
+    }
+};
+```

@@ -1,0 +1,79 @@
+[题目链接](https://www.nowcoder.com/practice/a861533d45854474ac791d90e447bafd?tpId=13&tqId=11176&tPage=2&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+思路：二叉搜索树是一种经过排序的二叉树。有这样的性质，左子节点的值<根节点的值<右子节点的值。 有递归和非递归解法。 递归较容易写，非递归来自讨论区。
+
+非递归思路：因为有以上的性质，所以可以每次针对根节点，判断左右子树是否为二叉搜索树，满足就删掉根节点；否则不是二叉搜索树。
+
+代码【递归】：
+
+```cpp
+class Solution {
+public:
+    bool VerifySquenceOfBST(vector<int> sequence) {
+        if(sequence.empty()) {
+            return false;
+        }
+        int len=sequence.size();
+        ///在二叉搜索树中查找小于根节点的左子节点
+        vector<int>leftSequence;
+        int i=0;
+        while(i<len-1) {
+            if(sequence[i]<sequence[len-1]) {
+                leftSequence.push_back(sequence[i]);
+            } else {
+                break;
+            }
+            i++;
+        }
+        ///在二叉搜索树中查找大于根节点的右子节点
+        vector<int>rightSequence;
+        int j=i;
+        while(j<len-1) {
+            if(sequence[j]>sequence[len-1]) {
+                rightSequence.push_back(sequence[j]);
+            } else {
+                return false;
+            }
+            j++;
+        }
+        /// 判断左子树是否为二叉搜索树
+        bool left=true;
+        if(i>0) {
+            left = VerifySquenceOfBST(leftSequence);
+        }
+        ///判断右子树是否为二叉搜索树
+        bool right=true;
+        if(i<len-1) {
+            right = VerifySquenceOfBST(rightSequence);
+        }
+        return left&&right;
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【非递归】：
+
+```cpp
+class Solution {
+public:
+    bool VerifySquenceOfBST(vector<int> sequence) {
+        if(sequence.empty()) {
+            return false;
+        }
+        int len=sequence.size()-1;
+        for(int i=0; len; i=0,len--) {
+            while(sequence[i++] < sequence[len]);
+            while(sequence[i++] > sequence[len]);
+            if(i < len)
+                return false;
+        }
+        return true;
+    }
+};
+```

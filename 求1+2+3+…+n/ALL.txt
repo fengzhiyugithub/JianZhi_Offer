@@ -1,0 +1,70 @@
+[题目链接](https://www.nowcoder.com/practice/7a0da8fc483247ff8800059e12d7caf1?tpId=13&tqId=11200&tPage=3&rp=1&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+求1+2+3+…+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+
+思路：虽然是简单的求和公式n*(n+1)/2，但是必须满足以上的条件。
+
+【1】递归，不能使用if等条件判断语句，可以使用&&逻辑运算符的短路特性实现。
+
+【2】利用sizeof(a)计算bool数组的字节数，bool类型在C++中占一个字节。
+
+【3】快速幂运算。
+
+原理：把a拆成2的幂的和，a = 2^e0 + 2^e1 + 2^e2….，
+
+那么 a * b = (2^e0 + 2^e1 + 2^e2+…) * b
+
+= b * 2^e0 + b * 2^e1 + b * 2^e2 + …
+
+= (b << e0) + (b << e1) + ….
+
+【4】pow()函数，严格来说这还是用到了乘法
+
+代码【1】：
+
+```cpp
+class Solution {
+public:
+    int Sum_Solution(int n) {
+        int sum=n;
+        sum && (sum += Sum_Solution(n-1));
+        return sum;
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【2】：
+
+```cpp
+class Solution {
+public:
+    int Sum_Solution(int n) {
+        bool a[n][n+1];
+        return sizeof(a)>>1;
+    }
+};
+```
+
+![点击并拖拽以移动](data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw==)
+
+代码【3】：
+
+```cpp
+class Solution {
+public:
+    int muti(int a, int b){
+        int res = 0;
+        (a&1) && (res += b);
+        a >>=1 ,b <<= 1;
+        a && (res += muti(a, b));
+        return res;
+    }
+    int Sum_Solution(int n) {
+        return muti(n, n+1)>>1;
+    }
+};
+```

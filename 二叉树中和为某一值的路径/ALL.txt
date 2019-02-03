@@ -1,0 +1,45 @@
+[题目链接](https://www.nowcoder.com/practice/b736e784e3e34731af99065031301bca?tpId=13&tqId=11177&tPage=2&rp=2&ru=%2Fta%2Fcoding-interviews&qru=%2Fta%2Fcoding-interviews%2Fquestion-ranking)
+
+## 题目描述
+
+输入一颗二叉树的跟节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)
+
+分析：递归。 不过我想到的还需要排序，因为要使数组长度大的数组靠前
+
+```
+/*
+struct TreeNode {
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+    TreeNode(int x) :
+            val(x), left(NULL), right(NULL) {
+    }
+};*/
+class Solution {
+private:
+    vector<vector<int> >res;
+    vector<int>path;
+public:
+    void dfs(TreeNode* root, int sum){
+        if(!root) return ;
+        path.push_back(root->val);
+        if(!root->left && !root->right && sum==root->val) {
+            res.push_back(path);
+            return ;
+        }
+        if(root->left){
+            dfs(root->left, sum-root->val);
+            path.pop_back();
+        }
+        if(root->right){
+            dfs(root->right, sum-root->val);
+            path.pop_back();
+        }
+    }
+    vector<vector<int> > FindPath(TreeNode* root,int expectNumber) {
+        dfs(root, expectNumber);
+        return res;
+    }
+};
+```
